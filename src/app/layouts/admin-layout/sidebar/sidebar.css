@@ -1,0 +1,45 @@
+:host {
+    display: contents;
+}
+
+.sidebar-user{
+
+    border-bottom:1px solid rgba(255,255,255,.12);
+
+}
+
+.sidebar-user small{
+
+    font-size:12px;
+
+}
+
+.nav-link{
+
+    cursor:pointer;
+
+}
+
+.nav-link p{
+
+    margin-bottom:0;
+
+}
+
+.nav-treeview{
+
+    margin-top:4px;
+
+}
+
+.nav-treeview .nav-link{
+
+    padding-left:2.8rem;
+
+}
+
+.nav-treeview .nav-icon{
+
+    font-size:14px;
+
+}

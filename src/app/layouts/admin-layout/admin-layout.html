@@ -1,0 +1,31 @@
+<div class="app-wrapper layout-fixed" [class.sidebar-collapse]="layoutService.sidebarCollapsed()">
+
+    <!-- Navbar -->
+
+    <app-navbar></app-navbar>
+
+    <!-- Sidebar -->
+
+    <app-sidebar></app-sidebar>
+
+    <!-- Main Content -->
+
+    <main class="app-main">
+
+        <div class="app-content">
+
+            <div class="container-fluid">
+
+                <router-outlet></router-outlet>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+
+    <app-footer></app-footer>
+
+</div>

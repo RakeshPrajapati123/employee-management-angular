@@ -1,0 +1,374 @@
+<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+
+
+    <!-- Brand Logo -->
+
+    <div class="sidebar-brand">
+
+        <a routerLink="/dashboard"
+           class="brand-link text-decoration-none">
+
+            <span class="brand-text fw-bold">
+                EMS
+            </span>
+
+        </a>
+
+    </div>
+
+
+
+    <!-- User Panel -->
+
+    <div class="sidebar-user text-center py-3 border-bottom">
+
+    <i class="bi bi-person-circle fs-1 text-white"></i>
+
+    <div class="fw-semibold mt-2">
+
+        Administrator
+
+    </div>
+
+    <small class="text-secondary">
+
+        System Administrator
+
+    </small>
+
+</div>
+
+
+
+
+    <!-- Sidebar Menu -->
+
+    <div class="sidebar-wrapper">
+
+
+        <nav class="mt-2">
+
+
+            <ul class="nav sidebar-menu flex-column"
+                role="menu">
+
+
+
+                <!-- Dashboard -->
+
+                <li class="nav-item">
+
+
+                    <a 
+                    routerLink="/dashboard"
+                    routerLinkActive="active"
+                    class="nav-link">
+
+
+                        <i class="nav-icon bi bi-speedometer2"></i>
+
+
+                        <p>
+                            Dashboard
+                        </p>
+
+
+                    </a>
+
+
+                </li>
+
+
+
+
+                <!-- Employees -->
+
+                <li class="nav-item">
+
+    <a
+        class="nav-link"
+        style="cursor:pointer"
+        (click)="toggleEmployeeMenu()">
+
+        <i class="nav-icon bi bi-people-fill"></i>
+
+        <p class="d-flex align-items-center w-100 mb-0">
+
+    <span>Employees</span>
+
+    <i
+        class="bi ms-auto"
+        [class.bi-chevron-right]="!employeeMenuOpen()"
+        [class.bi-chevron-down]="employeeMenuOpen()">
+    </i>
+
+</p>
+
+    </a>
+
+    @if(employeeMenuOpen()){
+
+        <ul class="nav flex-column ms-3 mt-1">
+
+            <li class="nav-item">
+
+                <a
+                    routerLink="/employees"
+                    routerLinkActive="active"
+                    class="nav-link">
+
+                    <i class="bi bi-list-ul nav-icon"></i>
+
+                    <p>Employee List</p>
+
+                </a>
+
+            </li>
+
+            <li class="nav-item">
+
+                <a
+                    routerLink="/employees/add"
+                    routerLinkActive="active"
+                    class="nav-link">
+
+                    <i class="bi bi-person-plus-fill nav-icon"></i>
+
+                    <p>Add Employee</p>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    }
+
+</li>
+
+
+
+
+                <!-- Master Data -->
+
+                <li class="nav-item">
+
+    <a
+        class="nav-link"
+        style="cursor:pointer"
+        (click)="toggleMasterMenu()">
+
+        <i class="nav-icon bi bi-database-fill"></i>
+
+        <p class="d-flex align-items-center w-100 mb-0">
+
+    <span>Master Data</span>
+
+    <i
+        class="bi ms-auto"
+        [class.bi-chevron-right]="!masterMenuOpen()"
+        [class.bi-chevron-down]="masterMenuOpen()">
+    </i>
+
+</p>
+
+    </a>
+
+           @if(masterMenuOpen()){
+
+<ul class="nav flex-column ms-3 mt-1">
+
+    <li class="nav-item">
+
+        <a
+            routerLink="/departments"
+            routerLinkActive="active"
+            class="nav-link">
+
+            <i class="bi bi-building nav-icon"></i>
+
+            <p>Departments</p>
+
+        </a>
+
+    </li>
+
+    <li class="nav-item">
+
+        <a
+            routerLink="/designations"
+            routerLinkActive="active"
+            class="nav-link">
+
+            <i class="bi bi-person-badge-fill nav-icon"></i>
+
+            <p>Designations</p>
+
+        </a>
+
+    </li>
+
+    
+
+</ul>
+
+}
+
+   
+</li>
+
+<!-- Reports -->
+
+<li class="nav-item">
+
+    <a
+        class="nav-link"
+        style="cursor:pointer"
+        (click)="toggleReportsMenu()">
+
+        <i class="nav-icon bi bi-file-earmark-bar-graph-fill"></i>
+
+        <p class="d-flex align-items-center w-100 mb-0">
+
+            <span>Reports</span>
+
+            <i
+                class="bi ms-auto"
+                [class.bi-chevron-right]="!reportsMenuOpen()"
+                [class.bi-chevron-down]="reportsMenuOpen()">
+            </i>
+
+        </p>
+
+    </a>
+
+    @if(reportsMenuOpen()){
+
+    <ul class="nav flex-column ms-3 mt-1">
+
+        <li class="nav-item">
+
+            <a
+                routerLink="/reports/employees"
+                routerLinkActive="active"
+                class="nav-link">
+
+                <i class="bi bi-file-earmark-text nav-icon"></i>
+
+                <p>Employee Report</p>
+
+            </a>
+
+        </li>
+
+        <li class="nav-item">
+
+            <a
+                routerLink="/reports/departments"
+                routerLinkActive="active"
+                class="nav-link">
+
+                <i class="bi bi-file-earmark-text nav-icon"></i>
+
+                <p>Department Report</p>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    }
+
+</li>
+
+<!-- Administration -->
+
+<li class="nav-header">
+
+    SYSTEM
+
+</li>
+
+<li class="nav-item">
+
+    <a
+        class="nav-link"
+        style="cursor:pointer"
+        (click)="toggleAdministrationMenu()">
+
+        <i class="nav-icon bi bi-gear-fill"></i>
+
+        <p class="d-flex align-items-center w-100 mb-0">
+
+            <span>Administration</span>
+
+            <i
+                class="bi ms-auto"
+                [class.bi-chevron-right]="!administrationMenuOpen()"
+                [class.bi-chevron-down]="administrationMenuOpen()">
+            </i>
+
+        </p>
+
+    </a>
+
+    @if(administrationMenuOpen()){
+
+    <ul class="nav flex-column ms-3 mt-1">
+
+        <li class="nav-item">
+
+            <a class="nav-link">
+
+                <i class="bi bi-person-gear nav-icon"></i>
+
+                <p>Users</p>
+
+            </a>
+
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link">
+
+                <i class="bi bi-shield-lock-fill nav-icon"></i>
+
+                <p>Roles</p>
+
+            </a>
+
+        </li>
+
+        <li class="nav-item">
+
+            <a class="nav-link">
+
+                <i class="bi bi-key-fill nav-icon"></i>
+
+                <p>Permissions</p>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    }
+
+</li>
+
+
+
+            </ul>
+
+
+
+        </nav>
+
+
+    </div>
+
+
+</aside>

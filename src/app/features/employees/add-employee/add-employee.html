@@ -1,0 +1,335 @@
+<div class="card">
+
+    <!-- Card Header -->
+    <div class="card-header">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="card-title">
+
+                <i class="bi bi-person-plus-fill me-2"></i>
+
+                Add Employee
+
+            </h3>
+
+            <a routerLink="/employees" class="btn btn-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+
+                Back to Employee List
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <form [formGroup]="employeeForm">
+
+        <div class="card-body">
+
+            <!-- ================= Personal Information ================= -->
+
+            <div class="row mb-4">
+
+                <div class="col-12">
+
+                    <h5 class="text-primary mb-1">
+
+                        <i class="bi bi-person-fill me-2"></i>
+
+                        Personal Information
+
+                    </h5>
+
+                    <hr class="mt-2 mb-3">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-2">
+
+                    <label class="form-label fw-semibold">
+
+                        Employee Name <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="employeeName"
+                        placeholder="Enter employee name">
+
+                </div>
+
+                <div class="col-md-6 mb-2">
+
+                    <label class="form-label fw-semibold">
+
+                        Phone <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone number">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-2">
+
+                    <label class="form-label fw-semibold">
+
+                        Alternate Phone
+
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="alternatePhone"
+                        placeholder="Enter alternate phone number">
+
+                </div>
+
+                <div class="col-md-6 mb-2">
+
+                    <label class="form-label fw-semibold">
+
+                        Email <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input type="email" class="form-control" formControlName="email" placeholder="Enter email address">
+
+                </div>
+
+            </div>
+
+            <!-- ================= Address Information ================= -->
+
+            <div class="row mt-4 mb-3">
+
+                <div class="col-12">
+
+                    <h5 class="text-primary mb-1">
+
+                        <i class="bi bi-geo-alt-fill me-2"></i>
+
+                        Address Information
+
+                    </h5>
+
+                    <hr class="mt-2 mb-3">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12 mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        Address
+
+                    </label>
+
+                    <textarea rows="3" class="form-control" formControlName="address"
+                        placeholder="Enter complete address">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        City <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="city" placeholder="Enter city">
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        State <span class="text-danger">*</span>
+
+                    </label>
+
+                    <input type="text" class="form-control" formControlName="state" placeholder="Enter state">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+    <div class="col-md-6 mb-3">
+
+        <label class="form-label fw-semibold">
+
+            Pin Code <span class="text-danger">*</span>
+
+        </label>
+
+        <input
+            type="text"
+            class="form-control"
+            formControlName="pinCode"
+            placeholder="Enter pin code">
+
+    </div>
+
+    <div class="col-md-6 mb-3 d-flex align-items-end">
+
+    <div class="form-check">
+
+        <input
+            class="form-check-input"
+            type="checkbox"
+            checked
+            disabled>
+
+        <label class="form-check-label fw-semibold">
+
+            Active (Default)
+
+        </label>
+
+    </div>
+
+</div>
+
+</div>
+            <!-- ================= Employment Information ================= -->
+
+            <div class="row mt-4 mb-3">
+
+                <div class="col-12">
+
+                    <h5 class="text-primary">
+
+                        <i class="bi bi-briefcase-fill me-2"></i>
+
+                        Employment Information
+
+                    </h5>
+
+                    <hr class="mt-2 mb-3">
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        Designation <span class="text-danger">*</span>
+
+                    </label>
+
+                    <select class="form-select" formControlName="designationID">
+
+                        <option [value]="0">
+                            -- Select Designation --
+                        </option>
+
+                        @for (designation of designations; track designation.designationId) {
+
+    <option [value]="designation.designationId">
+
+        {{ designation.designationName }}
+
+    </option>
+
+}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label fw-semibold">
+
+                        Role <span class="text-danger">*</span>
+
+                    </label>
+
+                    <select class="form-select" formControlName="roleID">
+
+                        <option [value]="0">
+                            -- Select Role --
+                        </option>
+
+                        @for (role of roles; track role.roleId) {
+
+    <option [value]="role.roleId">
+
+        {{ role.roleName }}
+
+    </option>
+
+}
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+<hr class="mt-2 mb-3">
+
+<div class="d-flex justify-content-center gap-3 mt-4 mb-3">
+
+    <button
+        type="button"
+        class="btn btn-secondary">
+
+        <i class="bi bi-arrow-counterclockwise me-1"></i>
+
+        Reset
+
+    </button>
+
+    <a
+        routerLink="/employees"
+        class="btn btn-outline-danger">
+
+        <i class="bi bi-x-circle me-1"></i>
+
+        Cancel
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        <i class="bi bi-check-circle me-1"></i>
+
+        Save Employee
+
+    </button>
+
+</div>
+
+    </form>
+
+</div>
