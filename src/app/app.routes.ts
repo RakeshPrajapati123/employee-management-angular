@@ -3,6 +3,7 @@ import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { Login } from './features/auth/login/login';
 import { AdminLayout } from './layouts/admin-layout/admin-layout';
 import { Dashboard } from './features/dashboard/dashboard/dashboard';
+import { EmployeeDetails } from './features/employees/employee-details/employee-details';
 
 export const routes: Routes = [
   {
@@ -41,6 +42,12 @@ export const routes: Routes = [
         path: 'employees/add',
         loadComponent: () =>
           import('./features/employees/add-employee/add-employee').then((m) => m.AddEmployee),
+      },
+
+      {
+        path: 'employees/details/:id',
+        loadComponent: () =>
+          import('./features/employees/employee-details/employee-details').then((m) => m.EmployeeDetails),
       },
     ],
   },

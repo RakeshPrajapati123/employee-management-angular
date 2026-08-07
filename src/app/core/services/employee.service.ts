@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { EmployeeModel } from '../../models/employee.model';
 import { DesignationModel } from '../../models/designation.model';
 import { RoleModel } from '../../models/role.model';
+import { ApiResponse } from '../../models/api-response';
+import { AddEmployeeRequest } from '../../models/add-employee.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,32 +15,49 @@ export class EmployeeService {
    private http = inject(HttpClient);
    private apiUrl = environment.apiUrl;
 
-   getEmployees(): Observable<EmployeeModel[]> {
+   getEmployees(): Observable<ApiResponse<EmployeeModel[]>> {
 
-  return this.http.get<EmployeeModel[]>(
-    `${this.apiUrl}/Employee/GetAllEmployees`
+  return this.http.get<ApiResponse<EmployeeModel[]>>(
+    `${this.apiUrl}/Employee`
   );
 
 }
 
  // ================= Designation =================
 
-  getDesignations(): Observable<DesignationModel[]> {
+  getDesignations(): Observable<ApiResponse<DesignationModel[]>> {
 
-    return this.http.get<DesignationModel[]>(
-      `${this.apiUrl}/Designation/GetAllDesignations`
+    return this.http.get<ApiResponse<DesignationModel[]>>(
+      `${this.apiUrl}/Designation`
     );
 
   }
 
   // ================= Role =================
 
-  getRoles(): Observable<RoleModel[]> {
+  getRoles(): Observable<ApiResponse<RoleModel[]>> {
 
-    return this.http.get<RoleModel[]>(
-      `${this.apiUrl}/Role/GetAllRoles`
+    return this.http.get<ApiResponse<RoleModel[]>>(
+      `${this.apiUrl}/Role`
     );
 
   }
+
+  addEmployee(employee: AddEmployeeRequest): Observable<ApiResponse<EmployeeModel>> {
+
+  return this.http.post<ApiResponse<EmployeeModel>>(
+    `${this.apiUrl}/Employee`,
+    employee
+  );
+
+}
+
+getEmployeeById(id: number): Observable<ApiResponse<EmployeeModel>> {
+
+  return this.http.get<ApiResponse<EmployeeModel>>(
+    `${this.apiUrl}/Employee/${id}`
+  );
+
+}
 
 }

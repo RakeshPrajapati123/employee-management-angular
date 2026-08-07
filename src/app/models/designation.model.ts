@@ -1,5 +1,5 @@
 export interface DesignationModel {
-  designationId: number;
+  designationID: number;
   designationName: string;
   isActive: boolean;
 }

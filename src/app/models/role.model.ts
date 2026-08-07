@@ -1,5 +1,5 @@
 export interface RoleModel {
-  roleId: number;
+  roleID: number;
   roleName: string;
   isActive: boolean;
 }

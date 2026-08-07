@@ -1,10 +1,3 @@
-<h1 style="color:red">
-EMPLOYEE COMPONENT LOADED
-</h1>
-
-<h2>Employees = {{ employees().length }}</h2>
-
-
 <div class="card mt-3">
 
     <div class="card-header">
@@ -17,9 +10,7 @@ EMPLOYEE COMPONENT LOADED
 
             </h3>
 
-            <a
-                routerLink="/employees/add"
-                class="btn btn-primary">
+            <a routerLink="/employees/add" class="btn btn-primary">
 
                 <i class="bi bi-plus-circle"></i>
 
@@ -35,16 +26,24 @@ EMPLOYEE COMPONENT LOADED
 
         <div class="row mb-3">
 
-            <div class="col-md-4">
+           <div class="row mb-3">
 
-                <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search Employee">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Search by employee name..."
+                        [(ngModel)]="searchText" (input)="filterEmployees()">
+                </div>
 
-            </div>
+                <div class="col-md-3">
+                    <select class="form-select" [(ngModel)]="statusFilter" (change)="filterEmployees()">
 
-            <div class="col-md-auto">
+                        <option value="All">All</option>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+
+                    </select>
+                </div>
+
+<div class="col-md-auto">
 
                 <button class="btn btn-secondary">
 
@@ -56,6 +55,25 @@ EMPLOYEE COMPONENT LOADED
 
             </div>
 
+<div class="col-md-2">
+
+    <button
+      type="button"
+      class="btn btn-secondary w-100"
+      (click)="resetFilter()">
+
+      <i class="bi bi-arrow-counterclockwise me-1"></i>
+
+      Reset
+
+    </button>
+
+  </div>
+
+            </div>
+
+            
+
         </div>
 
         <div class="table-responsive">
@@ -66,13 +84,15 @@ EMPLOYEE COMPONENT LOADED
 
                     <tr>
 
-                        <th>ID</th>
-
                         <th>Employee Name</th>
 
                         <th>Phone</th>
 
                         <th>Designation</th>
+
+                        <th>Department</th>
+
+                        <th>Role</th>
 
                         <th>Status</th>
 
@@ -86,22 +106,51 @@ EMPLOYEE COMPONENT LOADED
 
                 </thead>
 
-              <tbody>
+                <tbody>
 
-    @for (employee of employees(); track employee.employeeID) {
+                    @for (employee of filteredEmployees(); track employee.employeeID) {
 
-    <tr>
-        <td>{{ employee.employeeID }}</td>
-        <td>{{ employee.employeeName }}</td>
-        <td>{{ employee.phone }}</td>
-        <td>{{ employee.designationName }}</td>
-        <td>{{ employee.isActive }}</td>
-        <td></td>
-    </tr>
+                    <tr>
+                        <td>{{ employee.employeeName }}</td>
+                        <td>{{ employee.phone }}</td>
+                        <td>{{ employee.designationName }}</td>
+                        <td>{{ employee.departmentName }}</td>
+                        <td>{{ employee.roleName }}</td>
+                        <td>{{ employee.isActive }}</td>
+                        <td class="text-center">
 
-    }
+ <button
+    type="button"
+    class="btn btn-sm btn-outline-info me-2"
+    title="View"
+    [routerLink]="['/employees/details', employee.employeeID]">
 
-</tbody>
+    <i class="bi bi-eye-fill"></i>
+
+</button>
+
+  <button
+    class="btn btn-sm btn-outline-warning me-2"
+    title="Edit">
+
+    <i class="bi bi-pencil-square"></i>
+
+  </button>
+
+  <button
+    class="btn btn-sm btn-outline-danger"
+    title="Delete">
+
+    <i class="bi bi-trash-fill"></i>
+
+  </button>
+
+</td>
+                    </tr>
+
+                    }
+
+                </tbody>
             </table>
 
         </div>

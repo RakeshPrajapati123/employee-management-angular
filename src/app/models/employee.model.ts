@@ -3,6 +3,8 @@ export interface EmployeeModel {
     employeeID: number;
     employeeName: string;
     phone: string;
+    alternatePhone: string;
+    address: string;
     email: string;
     city: string;
     state: string;
@@ -10,6 +12,7 @@ export interface EmployeeModel {
     isActive: boolean;
     createdDate: Date;
     designationName: string;
+    departmentName: string;
     roleName: string;
     
    

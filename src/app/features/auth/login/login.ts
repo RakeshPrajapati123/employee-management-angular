@@ -43,8 +43,8 @@ export class Login {
 
           console.log('Login Successful');
           console.log(response);
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('refreshToken', response.refreshToken);
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('refreshToken', response.data.refreshToken);
 
           this.router.navigate(['/dashboard']);
 

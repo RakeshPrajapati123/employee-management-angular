@@ -11,6 +11,8 @@ import { DesignationModel } from '../../../models/designation.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
+import { AddEmployeeRequest } from '../../../models/add-employee.model';
 
 @Component({
   selector: 'app-add-employee',
@@ -22,6 +24,7 @@ import { throwError } from 'rxjs';
 export class AddEmployee {
 
 private fb = inject(FormBuilder);
+private cdr = inject(ChangeDetectorRef);
 
 employeeForm = this.fb.group({
 
@@ -81,7 +84,9 @@ getDesignations(): void {
 
                 console.log(response);
 
-                this.designations = response.filter(x => x.isActive);
+                this.designations = response.data.filter(x => x.isActive);
+
+                this.cdr.detectChanges();
 
             },
 
@@ -106,7 +111,9 @@ getRoles(): void {
 
                 console.log(response);
 
-                this.roles = response.filter(x => x.isActive);
+                this.roles = response.data.filter(x => x.isActive);
+
+                this.cdr.detectChanges();
 
             },
 
@@ -120,4 +127,52 @@ getRoles(): void {
 
 }
 
+onSubmit(): void {
+
+  if (this.employeeForm.invalid) {
+
+    this.employeeForm.markAllAsTouched();
+    return;
+
+  }
+
+  const employee: AddEmployeeRequest = {
+  employeeName: this.employeeForm.value.employeeName!,
+  phone: this.employeeForm.value.phone!,
+  email: this.employeeForm.value.email!,
+  address: this.employeeForm.value.address!,
+  city: this.employeeForm.value.city!,
+  state: this.employeeForm.value.state!,
+  pinCode: this.employeeForm.value.pinCode!,
+  designationID: Number(this.employeeForm.value.designationID),
+  roleID: Number(this.employeeForm.value.roleID),
+  isActive: true
+};
+
+  this.employeeService.addEmployee(employee)
+    .subscribe({
+
+      next: (response) => {
+
+        console.log(response);
+
+      },
+
+      error: (error) => {
+
+        console.log(error);
+
+      }
+
+    });
+
 }
+
+  //console.log(this.employeeForm.value);
+
+  // Call EmployeeService here
+}
+
+
+
+

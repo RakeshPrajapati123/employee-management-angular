@@ -1,13 +1,15 @@
-export interface AddEmployee {  
+export interface AddEmployeeRequest {  
 
   employeeName: string;
   phone: string;
   email: string;
+  address: string;
   city: string;
   state: string;
   pinCode: string;
-  designationId: string;
-  roleId: string;
+  alternatePhone?: string;
+  designationID: number;
+  roleID: number;
   isActive: boolean;
   
 }

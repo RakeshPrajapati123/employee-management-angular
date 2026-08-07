@@ -25,7 +25,7 @@
 
     </div>
 
-    <form [formGroup]="employeeForm">
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
 
         <div class="card-body">
 
@@ -235,60 +235,44 @@
             <div class="row">
 
                 <div class="col-md-6 mb-3">
+  <label class="form-label fw-semibold">
+    Designation <span class="text-danger">*</span>
+  </label>
 
-                    <label class="form-label fw-semibold">
+  <select class="form-select" formControlName="designationID">
 
-                        Designation <span class="text-danger">*</span>
+    <option value="0">-- Select Designation --</option>
 
-                    </label>
+    <option
+      *ngFor="let designation of designations"
+      [value]="designation.designationID">
 
-                    <select class="form-select" formControlName="designationID">
-
-                        <option [value]="0">
-                            -- Select Designation --
-                        </option>
-
-                        @for (designation of designations; track designation.designationId) {
-
-    <option [value]="designation.designationId">
-
-        {{ designation.designationName }}
+      {{ designation.designationName }}
 
     </option>
 
-}
+  </select>
+</div>
 
-                    </select>
+  <div class="col-md-6 mb-3">
+  <label class="form-label fw-semibold">
+    Role <span class="text-danger">*</span>
+  </label>
 
-                </div>
+  <select class="form-select" formControlName="roleID">
 
-                <div class="col-md-6 mb-3">
+    <option value="0">-- Select Role --</option>
 
-                    <label class="form-label fw-semibold">
+    <option
+      *ngFor="let role of roles"
+      [value]="role.roleID">
 
-                        Role <span class="text-danger">*</span>
-
-                    </label>
-
-                    <select class="form-select" formControlName="roleID">
-
-                        <option [value]="0">
-                            -- Select Role --
-                        </option>
-
-                        @for (role of roles; track role.roleId) {
-
-    <option [value]="role.roleId">
-
-        {{ role.roleName }}
+      {{ role.roleName }}
 
     </option>
 
-}
-
-                    </select>
-
-                </div>
+  </select>
+</div>
 
             </div>
 
