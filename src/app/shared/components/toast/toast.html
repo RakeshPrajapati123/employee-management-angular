@@ -1,0 +1,42 @@
+<div class="toast-container">
+
+  @for (notification of notifications(); track notification.id) {
+
+    <div
+      class="toast-message"
+      [class.success]="notification.type === 'success'"
+      [class.error]="notification.type === 'error'"
+      [class.warning]="notification.type === 'warning'"
+      [class.info]="notification.type === 'info'">
+
+      <div class="toast-icon">
+
+        @if (notification.type === 'success') {
+          <i class="bi bi-check-circle-fill"></i>
+        }
+
+        @if (notification.type === 'error') {
+          <i class="bi bi-x-circle-fill"></i>
+        }
+
+        @if (notification.type === 'warning') {
+          <i class="bi bi-exclamation-triangle-fill"></i>
+        }
+
+        @if (notification.type === 'info') {
+          <i class="bi bi-info-circle-fill"></i>
+        }
+
+      </div>
+
+      <div class="toast-text">
+
+        {{ notification.message }}
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

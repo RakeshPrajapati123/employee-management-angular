@@ -1,0 +1,91 @@
+<div class="page-container">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Role Details</h2>
+      <p>View role information.</p>
+    </div>
+
+    <div class="page-actions">
+
+      <a
+        routerLink="/roles"
+        class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Roles
+      </a>
+
+    </div>
+
+  </div>
+
+  @if (role) {
+
+    <div class="details-card">
+
+      <div class="details-row">
+
+        <div class="details-label">
+          Role Name
+        </div>
+
+        <div class="details-value">
+          {{ role.roleName }}
+        </div>
+
+      </div>
+
+       <div class="details-row">
+
+        <div class="details-label">
+          Role Description
+        </div>
+
+        <div class="details-value">
+          {{ role.roleDescription }}
+        </div>
+
+      </div>
+
+      <div class="details-row">
+
+        <div class="details-label">
+          Status
+        </div>
+
+        <div class="details-value">
+
+          @if (role.isActive) {
+
+            <span class="badge bg-success">
+              Active
+            </span>
+
+          } @else {
+
+            <span class="badge bg-secondary">
+              Inactive
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <div class="details-card text-center">
+
+      <p class="text-muted mb-0">
+        Loading role details...
+      </p>
+
+    </div>
+
+  }
+
+</div>

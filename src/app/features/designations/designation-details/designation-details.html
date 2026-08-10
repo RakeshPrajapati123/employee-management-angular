@@ -1,0 +1,92 @@
+<div class="page-container">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Designation Details</h2>
+      <p>View designation information.</p>
+    </div>
+
+    <div class="page-actions">
+
+      <a
+        routerLink="/designations"
+        class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Designations
+      </a>
+
+    </div>
+
+  </div>
+
+  @if (designation) {
+
+    <div class="details-card">
+
+
+<div class="details-row">
+
+        <div class="details-label">
+          Designation Name
+        </div>
+
+        <div class="details-value">
+          {{ designation.designationName }}
+        </div>
+
+      </div>
+
+      <div class="details-row">
+
+        <div class="details-label">
+          Department Name
+        </div>
+
+        <div class="details-value">
+          {{ designation.department?.departmentName }}
+        </div>
+
+      </div>
+
+      <div class="details-row">
+
+        <div class="details-label">
+          Status
+        </div>
+
+        <div class="details-value">
+
+          @if (designation.isActive) {
+
+            <span class="badge bg-success">
+              Active
+            </span>
+
+          } @else {
+
+            <span class="badge bg-secondary">
+              Inactive
+            </span>
+
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <div class="details-card text-center">
+
+      <p class="text-muted mb-0">
+        Loading designation details...
+      </p>
+
+    </div>
+
+  }
+
+</div>

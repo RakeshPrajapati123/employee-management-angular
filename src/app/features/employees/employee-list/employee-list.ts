@@ -5,6 +5,7 @@ import { EmployeeService } from '../../../core/services/employee.service';
 import { EmployeeModel } from '../../../models/employee.model';
 import { OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -19,6 +20,8 @@ export class EmployeeList implements OnInit {
 
   private router = inject(Router);
 
+  private notificationService = inject(NotificationService);
+
   searchText = '';
 
   statusFilter = 'All';
@@ -27,40 +30,53 @@ export class EmployeeList implements OnInit {
 
   filteredEmployees = signal<EmployeeModel[]>([]);
 
+  showDeleteModal = false;
+
+employeeToDelete: EmployeeModel | null = null;
+
   constructor() {
     console.log('EmployeeList Constructor');
   }
 
   ngOnInit(): void {
 
-    console.log('EmployeeList ngOnInit');
+  console.log('EmployeeList ngOnInit');
 
-    this.employeeService.getEmployees().subscribe({
+  this.loadEmployees();
+ 
+}
 
-      next: (response) => {
+    loadEmployees(): void {
 
-        console.log('API Response', response);
+  this.employeeService.getEmployees().subscribe({
 
-        this.employees.set(response.data);
+    next: (response) => {
 
-        this.filteredEmployees.set(response.data);
+      console.log('API Response', response);
 
-        console.log('Signal Value', this.employees());
+      this.employees.set(response.data);
 
-        console.log('Length', this.employees().length);
+      this.filteredEmployees.set(response.data);
 
-      },
+      console.log('Signal Value', this.employees());
 
-      error: (error) => {
+      console.log('Length', this.employees().length);
 
-        console.error(error);
+    },
 
-      }
+    error: (error) => {
 
-    });
+  console.error('Employee Load Error:', error);
 
-  }
+  this.notificationService.error(
+    error?.error?.message || 'Unable to load employees.'
+  );
 
+}
+
+  });
+
+}
   filterEmployees(): void {
 
   const search = this.searchText.toLowerCase().trim();
@@ -95,6 +111,62 @@ resetFilter(): void {
 viewEmployee(employeeID: number): void {
 
   this.router.navigate(['/employees/details', employeeID]);
+
+}
+
+deleteEmployee(employee: EmployeeModel): void {
+
+  this.employeeToDelete = employee;
+
+  this.showDeleteModal = true;
+
+}
+
+closeDeleteModal(): void {
+
+  this.showDeleteModal = false;
+
+  this.employeeToDelete = null;
+
+}
+
+confirmDelete(): void {
+
+  if (!this.employeeToDelete) {
+    return;
+  }
+
+  const employeeID = this.employeeToDelete.employeeID;
+
+  this.employeeService.deleteEmployee(employeeID)
+    .subscribe({
+
+      next: (response) => {
+
+        console.log('Delete Response:', response);
+
+        this.closeDeleteModal();
+
+        // Reload employee list
+        this.loadEmployees();
+this.notificationService.success(
+    response.message || 'Employee deleted successfully.'
+  );
+      },
+
+      error: (error) => {
+
+        console.error('Delete Error:', error);
+
+        this.closeDeleteModal();
+
+        this.notificationService.error(
+    error?.error?.message || 'Unable to delete employee.'
+  );
+
+      }
+
+    });
 
 }
 

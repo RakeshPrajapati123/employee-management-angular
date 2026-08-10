@@ -1,0 +1,97 @@
+<div class="page-container">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Edit Department</h2>
+      <p>Update department information.</p>
+    </div>
+
+    <div class="page-actions">
+      <a
+        routerLink="/departments"
+        class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Departments
+      </a>
+    </div>
+
+  </div>
+
+  @if (department.departmentID !== 0) {
+
+    <div class="form-card">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+
+          <label for="departmentName">
+            Department Name
+          </label>
+
+          <input
+            id="departmentName"
+            type="text"
+            class="form-control"
+            [(ngModel)]="department.departmentName"
+            placeholder="Enter department name">
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="isActive">
+            Status
+          </label>
+
+          <select
+            id="isActive"
+            class="form-select"
+            [(ngModel)]="department.isActive">
+
+            <option [ngValue]="true">
+              Active
+            </option>
+
+            <option [ngValue]="false">
+              Inactive
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <a
+          routerLink="/departments"
+          class="btn btn-secondary">
+          Cancel
+        </a>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="updateDepartment()">
+          <i class="bi bi-save"></i>
+          Update Department
+        </button>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <div class="form-card text-center">
+      <p class="text-muted mb-0">
+        Loading department details...
+      </p>
+    </div>
+
+  }
+
+</div>

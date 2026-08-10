@@ -1,0 +1,146 @@
+<div class="page-container">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Add Designation</h2>
+      <p>Create a new employee designation.</p>
+    </div>
+
+    <div>
+      <a
+        routerLink="/designations"
+        class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i>
+        Back to Designations
+      </a>
+    </div>
+
+  </div>
+
+  <div class="form-card">
+
+    <form
+      #designationForm="ngForm"
+      (ngSubmit)="addDesignation()">
+
+      <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+          <label
+            for="departmentID"
+            class="form-label">
+
+            Department
+
+          </label>
+
+          <select
+            id="departmentID"
+            name="departmentID"
+            class="form-select"
+            [(ngModel)]="designation.departmentID"
+            required>
+
+            <option
+              [ngValue]="0"
+              disabled>
+
+              Select Department
+
+            </option>
+
+            @for (department of departments; track department.departmentID) {
+
+              <option
+                [ngValue]="department.departmentID">
+
+                {{ department.departmentName }}
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+          <label
+            for="designationName"
+            class="form-label">
+
+            Designation Name
+
+          </label>
+
+          <input
+            type="text"
+            id="designationName"
+            name="designationName"
+            class="form-control"
+            [(ngModel)]="designation.designationName"
+            required
+            placeholder="Enter designation name">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+          <label
+            for="isActive"
+            class="form-label">
+
+            Status
+
+          </label>
+
+          <select
+            id="isActive"
+            name="isActive"
+            class="form-select"
+            [(ngModel)]="designation.isActive">
+
+            <option [ngValue]="true">
+              Active
+            </option>
+
+            <option [ngValue]="false">
+              Inactive
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <div class="form-actions">
+
+        <a
+          routerLink="/designations"
+          class="btn btn-secondary">
+
+          Cancel
+
+        </a>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="designationForm.invalid">
+
+          <i class="bi bi-save"></i>
+          Save Designation
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
