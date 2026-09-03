@@ -8,92 +8,79 @@
     </div>
 
     <div class="page-actions">
-
-      <a
-        routerLink="/roles"
-        class="btn btn-secondary">
+      <a routerLink="/roles" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i>
         Back to Roles
       </a>
-
     </div>
 
   </div>
 
   <div class="form-card">
 
-    <div class="form-grid">
+    <form #roleForm="ngForm" (ngSubmit)="addRole()" novalidate>
 
-      <div class="form-group">
+      <div class="form-grid">
 
-        <label for="roleName">
-          Role Name
-        </label>
+        <div class="form-group">
 
-        <input
-          id="roleName"
-          type="text"
-          class="form-control"
-          [(ngModel)]="role.roleName" placeholder="Enter role name">
+          <label for="roleName">Role Name</label>
 
-      </div>
+          <input
+            id="roleName"
+            name="roleName"
+            type="text"
+            class="form-control"
+            [(ngModel)]="role.roleName"
+            placeholder="Enter role name">
 
-      <div class="form-group">
+        </div>
 
-        <label for="roleName">
-          Role Name
-        </label>
+        <div class="form-group">
 
-        <input
-          id="roleDescription"
-          type="text"
-          class="form-control"
-          [(ngModel)]="role.roleDescription" placeholder="Enter role description">
+          <label for="roleDescription">Role Description</label>
 
-      </div>
+          <input
+            id="roleDescription"
+            name="roleDescription"
+            type="text"
+            class="form-control"
+            [(ngModel)]="role.roleDescription"
+            placeholder="Enter role description">
 
-      <div class="form-group">
+        </div>
 
-        <label for="isActive">
-          Status
-        </label>
+        <div class="form-group">
 
-        <select
-          id="isActive"
-          class="form-select"
-          [(ngModel)]="role.isActive">
+          <label for="isActive">Status</label>
 
-          <option [ngValue]="true">
-            Active
-          </option>
+          <select
+            id="isActive"
+            name="isActive"
+            class="form-select"
+            [(ngModel)]="role.isActive">
 
-          <option [ngValue]="false">
-            Inactive
-          </option>
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
 
-        </select>
+          </select>
+
+        </div>
 
       </div>
 
-    </div>
+      <div class="form-actions">
 
-    <div class="form-actions">
+        <a routerLink="/roles" class="btn btn-secondary">Cancel</a>
 
-      <a
-        routerLink="/roles"
-        class="btn btn-secondary">
-        Cancel
-      </a>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-plus-circle"></i>
+          Add Role
+        </button>
 
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="addRole()">
-        <i class="bi bi-plus-circle"></i>
-        Add Role
-      </button>
+      </div>
 
-    </div>
+    </form>
 
   </div>
 

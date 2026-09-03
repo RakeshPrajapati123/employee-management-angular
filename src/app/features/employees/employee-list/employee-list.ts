@@ -1,19 +1,20 @@
-import { Component, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
-import { EmployeeService } from '../../../core/services/employee.service';
-import { EmployeeModel } from '../../../models/employee.model';
-import { OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { EmployeeService } from '../../../core/services/employee/employee.service';
+import { EmployeeModel } from '../../../models/employee/employee.model';
 import { FormsModule } from '@angular/forms';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
+
 
 @Component({
   selector: 'app-employee-list',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule,CommonModule],
   templateUrl: './employee-list.html',
   styleUrls: ['./employee-list.css'],
 })
+
 export class EmployeeList implements OnInit {
 
   private employeeService = inject(EmployeeService);
@@ -34,13 +35,7 @@ export class EmployeeList implements OnInit {
 
 employeeToDelete: EmployeeModel | null = null;
 
-  constructor() {
-    console.log('EmployeeList Constructor');
-  }
-
   ngOnInit(): void {
-
-  console.log('EmployeeList ngOnInit');
 
   this.loadEmployees();
  
@@ -52,23 +47,15 @@ employeeToDelete: EmployeeModel | null = null;
 
     next: (response) => {
 
-      console.log('API Response', response);
-
       this.employees.set(response.data);
 
       this.filteredEmployees.set(response.data);
-
-      console.log('Signal Value', this.employees());
-
-      console.log('Length', this.employees().length);
 
     },
 
     error: (error) => {
 
-  console.error('Employee Load Error:', error);
-
-  this.notificationService.error(
+    this.notificationService.error(
     error?.error?.message || 'Unable to load employees.'
   );
 
@@ -143,20 +130,15 @@ confirmDelete(): void {
 
       next: (response) => {
 
-        console.log('Delete Response:', response);
-
         this.closeDeleteModal();
 
-        // Reload employee list
         this.loadEmployees();
-this.notificationService.success(
-    response.message || 'Employee deleted successfully.'
+        this.notificationService.success(
+        response.message || 'Employee deleted successfully.'
   );
       },
 
       error: (error) => {
-
-        console.error('Delete Error:', error);
 
         this.closeDeleteModal();
 

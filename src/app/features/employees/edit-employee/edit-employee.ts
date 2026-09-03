@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { EmployeeService } from '../../../core/services/employee.service';
-import { RoleModel } from '../../../models/role.model';
-import { DesignationModel } from '../../../models/designation.model';
-import { UpdateEmployeeRequest } from '../../../models/update-employee.model';
-import { EmployeeGetDetailsModel } from '../../../models/employee-get-details.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { EmployeeService } from '../../../core/services/employee/employee.service';
+import { RoleModel } from '../../../models/role/role.model';
+import { DesignationModel } from '../../../models/designation/designation.model';
+import { UpdateEmployeeRequest } from '../../../models/employee/update-employee.model';
+import { EmployeeGetDetailsModel } from '../../../models/employee/employee-get-details.model';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-edit-employee',
@@ -16,7 +16,9 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './edit-employee.html',
   styleUrl: './edit-employee.css',
 })
+
 export class EditEmployee {
+  
   private fb = inject(FormBuilder);
 
   private employeeService = inject(EmployeeService);
@@ -29,6 +31,8 @@ export class EditEmployee {
 
   employeeID!: number;
 
+  private originalEmployee!: EmployeeGetDetailsModel;
+
   designations: DesignationModel[] = [];
 
   roles: RoleModel[] = [];
@@ -36,9 +40,9 @@ export class EditEmployee {
   employeeForm = this.fb.group({
     employeeName: ['', Validators.required],
 
-    phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+    phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
 
-    alternatePhone: [''],
+    alternatePhone: ['', [Validators.pattern('^[6-9][0-9]{9}$')]],
 
     email: ['', [Validators.required, Validators.email]],
 
@@ -50,14 +54,15 @@ export class EditEmployee {
 
     pinCode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
 
-    designationID: [0, Validators.required],
+    designationID: [0, [Validators.required, Validators.min(1)]],
 
-    roleID: [0, Validators.required],
+    roleID: [0, [Validators.required, Validators.min(1)]],
 
     isActive: [true],
   });
 
   ngOnInit(): void {
+
     this.employeeID = Number(this.route.snapshot.paramMap.get('id'));
 
     this.getDesignations();
@@ -74,8 +79,7 @@ export class EditEmployee {
       },
 
       error: (error) => {
-        console.error('Error loading designations:', error);
-
+        
         this.notificationService.error(error?.error?.message || 'Unable to load designations.');
       },
     });
@@ -88,49 +92,42 @@ export class EditEmployee {
       },
 
       error: (error) => {
-        console.error('Error loading roles:', error);
-
+        
         this.notificationService.error(error?.error?.message || 'Unable to load roles.');
       },
     });
   }
 
   loadEmployee(): void {
-    this.employeeService.getEmployeeById(this.employeeID).subscribe({
-      next: (response) => {
-        const employee = response.data;
+  this.employeeService.getEmployeeById(this.employeeID).subscribe({
+    next: (response) => {
+      const employee = response.data;
 
-        this.employeeForm.patchValue({
-          employeeName: employee.employeeName,
+      this.originalEmployee = employee;
 
-          phone: employee.phone,
+      this.employeeForm.patchValue({
+        employeeName: employee.employeeName,
+        phone: employee.phone,
+        alternatePhone: employee.alternatePhone,
+        email: employee.email,
+        address: employee.address,
+        city: employee.city,
+        state: employee.state,
+        pinCode: employee.pinCode,
+        designationID: employee.designationID,
+        roleID: employee.roleID,
+        isActive: employee.isActive,
+      });
+    },
 
-          alternatePhone: employee.alternatePhone,
-
-          email: employee.email,
-
-          address: employee.address,
-
-          city: employee.city,
-
-          state: employee.state,
-
-          pinCode: employee.pinCode,
-
-          //designationID: employee.designationID,
-
-          //roleID: employee.roleID,
-
-          isActive: employee.isActive,
-        });
-      },
-
-      error: (error) => {
-        console.error('Error loading employee:', error);
-        this.notificationService.error(error?.error?.message || 'Unable to load employee details.');
-      },
-    });
-  }
+    error: (error) => {
+      
+      this.notificationService.error(
+        error?.error?.message || 'Unable to load employee details.'
+      );
+    },
+  });
+}
 
   onSubmit(): void {
     if (this.employeeForm.invalid) {
@@ -171,25 +168,37 @@ export class EditEmployee {
 
     this.employeeService.updateEmployee(this.employeeID, employee).subscribe({
       next: (response) => {
-        console.log('Employee updated successfully:', response);
-
+        
         this.router.navigate(['/employees']).then(() => {
           this.notificationService.success(response.message || 'Employee updated successfully.');
         });
       },
 
       error: (error) => {
-        console.error(
-          'Error updating employee:',
-
-          error,
-        );
         this.notificationService.error(error?.error?.message || 'Unable to update employee.');
       },
     });
   }
 
   resetForm(): void {
-    this.loadEmployee();
+  if (!this.originalEmployee) {
+    return;
   }
+
+  const employee = this.originalEmployee;
+
+  this.employeeForm.patchValue({
+    employeeName: employee.employeeName,
+    phone: employee.phone,
+    alternatePhone: employee.alternatePhone,
+    email: employee.email,
+    address: employee.address,
+    city: employee.city,
+    state: employee.state,
+    pinCode: employee.pinCode,
+    designationID: employee.designationID,
+    roleID: employee.roleID,
+    isActive: employee.isActive,
+  });
+}
 }

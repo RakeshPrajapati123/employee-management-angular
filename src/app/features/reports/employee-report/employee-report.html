@@ -1,0 +1,277 @@
+<div class="container-fluid mt-3">
+
+    <!-- Page Header -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h3 class="mb-1">
+                Employee Report
+            </h3>
+
+            <p class="text-muted mb-0">
+                View employee information and employment status
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Filter Card -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3 align-items-end">
+
+
+                <!-- Search -->
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Search Employee
+                    </label>
+
+                    <input
+    type="text"
+    id="employeeSearch"
+    name="employeeSearch"
+    class="form-control"
+    placeholder="Search by name, email, phone, department..."
+    [(ngModel)]="searchText"
+    (input)="filterEmployees()">
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="col-md-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select
+                        class="form-select"
+                        [(ngModel)]="statusFilter"
+                        (change)="filterEmployees()">
+
+                        <option value="All">
+                            All
+                        </option>
+
+                        <option value="true">
+                            Active
+                        </option>
+
+                        <option value="false">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Reset -->
+
+                <div class="col-md-3">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary w-100"
+                        (click)="resetFilter()">
+
+                        <i class="bi bi-arrow-counterclockwise me-1"></i>
+
+                        Reset
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Loading -->
+
+    @if (loading) {
+
+        <div class="card shadow-sm">
+
+            <div class="card-body text-center py-5">
+
+                <div
+                    class="spinner-border text-primary mb-3"
+                    role="status">
+                </div>
+
+                <p class="text-muted mb-0">
+                    Loading employee report...
+                </p>
+
+            </div>
+
+        </div>
+
+    }
+
+
+    <!-- Report -->
+
+    @else {
+
+        <div class="card shadow-sm">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h5 class="mb-0">
+                    Employee Report
+                </h5>
+
+                <span class="badge bg-primary">
+                    {{ filteredEmployees.length }} Employees
+                </span>
+
+            </div>
+
+
+            <div class="card-body p-0">
+
+                @if (filteredEmployees.length > 0) {
+
+                    <div class="table-responsive">
+
+                        <table class="table table-hover table-bordered mb-0">
+
+                            <thead class="table-light">
+
+                                <tr>
+
+                                    <th>
+                                        Employee Name
+                                    </th>
+
+                                    <th>
+                                        Phone
+                                    </th>
+
+                                    <th>
+                                        Department
+                                    </th>
+
+                                    <th>
+                                        Designation
+                                    </th>
+
+                                    <th>
+                                        Role
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Created Date
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                @for (
+                                    employee of filteredEmployees;
+                                    track employee.employeeID
+                                ) {
+
+                                    <tr>
+
+                                       <td>
+                                            {{ employee.employeeName }}
+                                        </td>
+
+                                        <td>
+                                            {{ employee.phone }}
+                                        </td>
+
+                                        <td>
+                                            {{ employee.departmentName }}
+                                        </td>
+
+                                        <td>
+                                            {{ employee.designationName }}
+                                        </td>
+
+                                        <td>
+                                            {{ employee.roleName }}
+                                        </td>
+
+                                        <td>
+
+                                            @if (employee.isActive) {
+
+                                                <span class="badge bg-success">
+                                                    Active
+                                                </span>
+
+                                            }
+                                            @else {
+
+                                                <span class="badge bg-secondary">
+                                                    Inactive
+                                                </span>
+
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            {{ employee.createdDate | date:'dd-MM-yyyy' }}
+                                        </td>
+
+                                    </tr>
+
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                }
+
+                @else {
+
+                    <div class="text-center py-5">
+
+                        <i class="bi bi-search fs-1 text-muted"></i>
+
+                        <p class="text-muted mt-3 mb-0">
+                            No employees found.
+                        </p>
+
+                    </div>
+
+                }
+
+            </div>
+
+        </div>
+
+    }
+
+</div>

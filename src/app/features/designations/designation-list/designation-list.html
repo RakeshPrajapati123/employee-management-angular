@@ -26,8 +26,7 @@
 
         <div class="row mb-3">
 
-            <div class="row mb-3">
-
+            
                 <div class="col-md-4">
                     <input type="text" class="form-control" placeholder="Search by designation name..."
                         [(ngModel)]="searchText" (input)="filterDesignations()">
@@ -65,8 +64,7 @@
 
                     </button>
 
-                </div>
-
+                
             </div>
 
 
@@ -99,39 +97,90 @@
 
                 <tbody>
 
-                    @for (designation of filteredDesignations(); track designation.designationID ) {
+    @for (designation of filteredDesignations(); track designation.designationID) {
 
-                    <tr>
-                        <td>{{ designation.designationName }}</td>
-                        <td>{{ designation.department }}</td>
-                        <td>{{ designation.isActive ? 'Active' : 'Inactive' }}</td>
-                        <td class="text-center">
+        <tr>
 
-                            <button type="button" class="btn btn-sm btn-outline-info me-2" title="View"
-                                [routerLink]="['/designations/details', designation.designationID]">
+            <td>{{ designation.designationName }}</td>
 
-                                <i class="bi bi-eye-fill"></i>
+            <td>{{ designation.departmentName }}</td>
 
-                            </button>
+            <td>
 
-                            <button type="button" class="btn btn-sm btn-outline-warning me-2" title="Edit"
-                                [routerLink]="['/designations/edit', designation.designationID ]">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
+@if (designation.isActive) {
 
-                            <button class="btn btn-sm btn-outline-danger" title="Delete"
-                                (click)="deleteDesignation(designation)">
+<span class="badge bg-success">Active</span>
 
-                                <i class="bi bi-trash-fill"></i>
+} @else {
 
-                            </button>
+<span class="badge bg-danger">Inactive</span>
 
-                        </td>
-                    </tr>
+}
 
-                    }
+</td>
 
-                </tbody>
+            <td class="text-center">
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-info me-2"
+                    title="View"
+                    [routerLink]="['/designations/details', designation.designationID]">
+
+                    <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-warning me-2"
+                    title="Edit"
+                    [routerLink]="['/designations/edit', designation.designationID]">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                </button>
+
+                <button
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteDesignation(designation)">
+
+                    <i class="bi bi-trash-fill"></i>
+
+                </button>
+
+            </td>
+
+        </tr>
+
+    }
+
+    @if (filteredDesignations().length === 0) {
+
+        <tr>
+
+            <td colspan="4" class="text-center py-4">
+
+                <i class="bi bi-info-circle me-2"></i>
+
+                @if (searchText || statusFilter !== 'All') {
+
+                    No designations found matching your search criteria.
+
+                } @else {
+
+                    No designations found.
+
+                }
+
+            </td>
+
+        </tr>
+
+    }
+
+</tbody>
             </table>
 
         </div>
@@ -247,62 +296,5 @@
 
     <div *ngIf="showDeleteModal" class="modal-backdrop fade show">
     </div>
-
-    @if (showDeleteModal) {
-
-  <div class="modal-backdrop">
-
-    <div class="delete-modal">
-
-      <div class="delete-modal-header">
-
-        <h5>Delete Designation</h5>
-
-        <button
-          type="button"
-          class="btn-close"
-          (click)="closeDeleteModal()">
-        </button>
-
-      </div>
-
-      <div class="delete-modal-body">
-
-        <p>
-          Are you sure you want to delete
-          <strong>
-            {{ designationToDelete?.designationName }}
-          </strong>?
-        </p>
-
-        <p class="text-muted mb-0">
-          This action cannot be undone.
-        </p>
-
-      </div>
-
-      <div class="delete-modal-footer">
-
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="closeDeleteModal()">
-          Cancel
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="confirmDelete()">
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-}
 
 </div>

@@ -8,78 +8,65 @@
     </div>
 
     <div class="page-actions">
-
-      <a
-        routerLink="/departments"
-        class="btn btn-secondary">
+      <a routerLink="/departments" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i>
         Back to Departments
       </a>
-
     </div>
 
   </div>
 
   <div class="form-card">
 
-    <div class="form-grid">
+    <form #departmentForm="ngForm" (ngSubmit)="addDepartment()" novalidate>
 
-      <div class="form-group">
+      <div class="form-grid">
 
-        <label for="departmentName">
-          Department Name
-        </label>
+        <div class="form-group">
 
-        <input
-          id="departmentName"
-          type="text"
-          class="form-control"
-          [(ngModel)]="department.departmentName" placeholder="Enter department name">
+          <label for="departmentName">Department Name</label>
 
-      </div>
+          <input
+            id="departmentName"
+            name="departmentName"
+            type="text"
+            class="form-control"
+            [(ngModel)]="department.departmentName"
+            placeholder="Enter department name">
 
-      <div class="form-group">
+        </div>
 
-        <label for="isActive">
-          Status
-        </label>
+        <div class="form-group">
 
-        <select
-          id="isActive"
-          class="form-select"
-          [(ngModel)]="department.isActive">
+          <label for="isActive">Status</label>
 
-          <option [ngValue]="true">
-            Active
-          </option>
+          <select
+            id="isActive"
+            name="isActive"
+            class="form-select"
+            [(ngModel)]="department.isActive">
 
-          <option [ngValue]="false">
-            Inactive
-          </option>
+            <option [ngValue]="true">Active</option>
+            <option [ngValue]="false">Inactive</option>
 
-        </select>
+          </select>
+
+        </div>
 
       </div>
 
-    </div>
+      <div class="form-actions">
 
-    <div class="form-actions">
+        <a routerLink="/departments" class="btn btn-secondary">Cancel</a>
 
-      <a
-        routerLink="/departments"
-        class="btn btn-secondary">
-        Cancel
-      </a>
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-plus-circle"></i>
+          Add Department
+        </button>
 
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="addDepartment()">
-        <i class="bi bi-plus-circle"></i>
-        Add Department
-      </button>
+      </div>
 
-    </div>
+    </form>
 
   </div>
 

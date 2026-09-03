@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-toast',
@@ -10,7 +10,7 @@ import { NotificationService } from '../../../core/services/notification.service
 
 export class Toast {
 
-  private notificationService = inject(NotificationService);
+  private readonly notificationService = inject(NotificationService);
 
   notifications = this.notificationService.notifications;
 

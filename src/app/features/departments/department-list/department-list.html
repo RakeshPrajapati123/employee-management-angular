@@ -24,8 +24,6 @@
 
     <div class="card-body">
 
-        <div class="row mb-3">
-
             <div class="row mb-3">
 
                 <div class="col-md-4">
@@ -45,7 +43,7 @@
 
                 <div class="col-md-auto">
 
-                    <button class="btn btn-secondary">
+                    <button class="btn btn-secondary" (click)="filterDepartments()">
 
                         <i class="bi bi-search"></i>
 
@@ -69,9 +67,6 @@
 
             </div>
 
-
-
-        </div>
 
         <div class="table-responsive">
 
@@ -97,38 +92,88 @@
 
                 <tbody>
 
-                    @for (department of filteredDepartments(); track department.departmentID ) {
+    @for (department of filteredDepartments(); track department.departmentID) {
 
-                    <tr>
-                        <td>{{ department.departmentName }}</td>
-                        <td>{{ department .isActive }}</td>
-                        <td class="text-center">
+        <tr>
 
-                            <button type="button" class="btn btn-sm btn-outline-info me-2" title="View"
-                                [routerLink]="['/departments/details', department.departmentID]">
+            <td>{{ department.departmentName }}</td>
 
-                                <i class="bi bi-eye-fill"></i>
+            <td>
 
-                            </button>
+@if (department.isActive) {
 
-                            <button type="button" class="btn btn-sm btn-outline-warning me-2" title="Edit"
-                                [routerLink]="['/departments/edit', department.departmentID ]">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
+<span class="badge bg-success">Active</span>
 
-                            <button class="btn btn-sm btn-outline-danger" title="Delete"
-                                (click)="deleteDepartment(department)">
+} @else {
 
-                                <i class="bi bi-trash-fill"></i>
+<span class="badge bg-danger">Inactive</span>
 
-                            </button>
+}
 
-                        </td>
-                    </tr>
+</td>
 
-                    }
+            <td class="text-center">
 
-                </tbody>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-info me-2"
+                    title="View"
+                    [routerLink]="['/departments/details', department.departmentID]">
+
+                    <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-warning me-2"
+                    title="Edit"
+                    [routerLink]="['/departments/edit', department.departmentID]">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                </button>
+
+                <button
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteDepartment(department)">
+
+                    <i class="bi bi-trash-fill"></i>
+
+                </button>
+
+            </td>
+
+        </tr>
+
+    }
+
+    @if (filteredDepartments().length === 0) {
+
+        <tr>
+
+            <td colspan="3" class="text-center py-4">
+
+                <i class="bi bi-info-circle me-2"></i>
+
+                @if (searchText || statusFilter !== 'All') {
+
+                    No departments found matching your search criteria.
+
+                } @else {
+
+                    No departments found.
+
+                }
+
+            </td>
+
+        </tr>
+
+    }
+
+</tbody>
             </table>
 
         </div>
@@ -244,62 +289,5 @@
 
     <div *ngIf="showDeleteModal" class="modal-backdrop fade show">
     </div>
-
-    @if (showDeleteModal) {
-
-  <div class="modal-backdrop">
-
-    <div class="delete-modal">
-
-      <div class="delete-modal-header">
-
-        <h5>Delete Department</h5>
-
-        <button
-          type="button"
-          class="btn-close"
-          (click)="closeDeleteModal()">
-        </button>
-
-      </div>
-
-      <div class="delete-modal-body">
-
-        <p>
-          Are you sure you want to delete
-          <strong>
-            {{ departmentToDelete?.departmentName }}
-          </strong>?
-        </p>
-
-        <p class="text-muted mb-0">
-          This action cannot be undone.
-        </p>
-
-      </div>
-
-      <div class="delete-modal-footer">
-
-        <button
-          type="button"
-          class="btn btn-secondary"
-          (click)="closeDeleteModal()">
-          Cancel
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-danger"
-          (click)="confirmDelete()">
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-}
 
 </div>

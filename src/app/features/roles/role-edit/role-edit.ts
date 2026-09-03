@@ -1,10 +1,10 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RoleService } from '../../../core/services/role/role.service';
 import { RoleModel } from '../../../models/role/role.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
 selector: 'app-role-edit',
@@ -18,7 +18,6 @@ export class RoleEdit implements OnInit {
 
 private roleService = inject(RoleService);
 private route = inject(ActivatedRoute);
-private cdr = inject(ChangeDetectorRef);
 private router = inject(Router);
 
 private notificationService = inject(NotificationService);
@@ -68,28 +67,16 @@ this.roleService
 
     next: (response) => {
 
-      console.log(
-        'Role Edit API Response:',
-        response
-      );
-
       this.role = response.data;
-      this.cdr.detectChanges();
-
+      
       this.isLoading = false;
 
     },
 
     error: (error) => {
 
-      console.error(
-        'Role Edit Load Error:',
-        error
-      );
-
       this.isLoading = false;
-      this.cdr.detectChanges();
-
+      
       this.notificationService.error(
         error?.error?.message ||
         'Unable to load role.'
@@ -138,11 +125,6 @@ this.roleService
 
     next: (response) => {
 
-      console.log(
-        'Update Role Response:',
-        response
-      );
-
       this.isSaving = false;
 
       this.notificationService.success(
@@ -155,11 +137,6 @@ this.roleService
     },
 
     error: (error) => {
-
-      console.error(
-        'Update Role Error:',
-        error
-      );
 
       this.isSaving = false;
 

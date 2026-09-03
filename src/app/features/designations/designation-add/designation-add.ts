@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DesignationService } from '../../../core/services/designation/designation.service';
 import { DesignationModel } from '../../../models/designation/designation.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 import { AddDesignationModel } from '../../../models/designation/add-designation.model';
 import { DepartmentModel } from '../../../models/department/department.model';
 import { DepartmentService } from '../../../core/services/department/department.service';
@@ -59,12 +59,7 @@ private designationService = inject(DesignationService);
 
         error: (error) => {
 
-          console.error(
-            'Department Load Error:',
-            error
-          );
-
-          this.notificationService.error(
+            this.notificationService.error(
             error?.error?.message ||
             'Unable to load departments.'
           );
@@ -116,12 +111,7 @@ private designationService = inject(DesignationService);
 
         error: (error) => {
 
-          console.error(
-            'Designation Add Error:',
-            error
-          );
-
-          this.notificationService.error(
+            this.notificationService.error(
             error?.error?.message ||
             'Unable to add designation.'
           );

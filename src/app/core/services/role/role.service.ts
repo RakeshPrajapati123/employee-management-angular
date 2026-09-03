@@ -10,9 +10,10 @@ import { ApiResponse } from '../../../models/api-response';
 })
 
 export class RoleService {
-  private http = inject(HttpClient);
 
-  private apiUrl = environment.apiUrl;
+  private readonly http = inject(HttpClient);
+
+  private readonly apiUrl = environment.apiUrl;
 
   // ================= Role =================
 

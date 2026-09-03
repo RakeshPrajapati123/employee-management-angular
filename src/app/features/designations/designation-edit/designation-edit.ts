@@ -1,10 +1,12 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DesignationService } from '../../../core/services/designation/designation.service';
+import { DepartmentService } from '../../../core/services/department/department.service';
 import { DesignationModel } from '../../../models/designation/designation.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { DepartmentModel } from '../../../models/department/department.model';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-designation-edit',
@@ -18,13 +20,15 @@ export class DesignationEdit implements OnInit {
 
   private designationService = inject(DesignationService);
 
+  private departmentService = inject(DepartmentService);
+
   private route = inject(ActivatedRoute);
 
   private router = inject(Router);
 
-  private cdr = inject(ChangeDetectorRef);
-
   private notificationService = inject(NotificationService);
+
+  departments: DepartmentModel[] = [];
 
   designationID!: number;
 
@@ -36,10 +40,10 @@ export class DesignationEdit implements OnInit {
 
     designationName: '',
 
+    departmentName: '',
+
     isActive: true,
-
-    department: null
-
+    
   };
 
   ngOnInit(): void {
@@ -49,6 +53,8 @@ export class DesignationEdit implements OnInit {
     );
 
     this.loadDesignation();
+
+    this.loadDepartments();
 
   }
 
@@ -61,18 +67,12 @@ export class DesignationEdit implements OnInit {
         next: (response) => {
 
           this.designation = response.data;
-          this.cdr.detectChanges();
-
+         
         },
 
         error: (error) => {
 
-          console.error(
-            'Error loading designation:',
-            error
-          );
-
-          this.notificationService.error(
+            this.notificationService.error(
             error?.error?.message ||
             'Unable to load designation.'
           );
@@ -83,6 +83,20 @@ export class DesignationEdit implements OnInit {
 
   }
 
+  loadDepartments(): void {
+  this.departmentService.getDepartments().subscribe({
+    next: (response) => {
+      this.departments = response.data.filter((x) => x.isActive);
+    },
+
+    error: (error) => {
+      
+      this.notificationService.error(
+        error?.error?.message || 'Unable to load departments.'
+      );
+    },
+  });
+}
   updateDesignation(): void {
 
     this.designationService
@@ -107,12 +121,7 @@ export class DesignationEdit implements OnInit {
 
         error: (error) => {
 
-          console.error(
-            'Designation Update Error:',
-            error
-          );
-
-          this.notificationService.error(
+            this.notificationService.error(
             error?.error?.message ||
             'Unable to update designation.'
           );

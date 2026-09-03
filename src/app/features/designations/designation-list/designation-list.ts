@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DesignationService } from '../../../core/services/designation/designation.service';
 import { DesignationModel } from '../../../models/designation/designation.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-designation-list',
@@ -45,8 +45,6 @@ export class DesignationList implements OnInit {
 
       next: (response) => {
 
-        console.log('Designation API Response:', response);
-
         this.designations.set(response.data);
 
         this.filteredDesignations.set(response.data);
@@ -55,12 +53,7 @@ export class DesignationList implements OnInit {
 
       error: (error) => {
 
-        console.error(
-          'Designation Load Error:',
-          error
-        );
-
-        this.notificationService.error(
+          this.notificationService.error(
           error?.error?.message ||
           'Unable to load designations.'
         );
@@ -162,11 +155,6 @@ export class DesignationList implements OnInit {
 
         next: (response) => {
 
-          console.log(
-            'Delete Designation Response:',
-            response
-          );
-
           this.closeDeleteModal();
 
           this.loadDesignations();
@@ -179,11 +167,6 @@ export class DesignationList implements OnInit {
         },
 
         error: (error) => {
-
-          console.error(
-            'Designation Delete Error:',
-            error
-          );
 
           this.closeDeleteModal();
 

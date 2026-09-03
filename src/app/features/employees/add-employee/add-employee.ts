@@ -1,17 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { Router } from '@angular/router';
-// import { Employee } from '../../models/employee.model';
-import { EmployeeService } from '../../../core/services/employee.service';
-// import { ToastrService } from 'ngx-toastr';
-// import { Observable } from 'rxjs';
-import { RoleModel } from '../../../models/role.model';
-import { DesignationModel } from '../../../models/designation.model';
-import { ChangeDetectorRef } from '@angular/core';
-import { AddEmployeeRequest } from '../../../models/add-employee.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { RouterLink, Router } from '@angular/router';
+import { EmployeeService } from '../../../core/services/employee/employee.service';
+import { RoleModel } from '../../../models/role/role.model';
+import { DesignationModel } from '../../../models/designation/designation.model';
+import { AddEmployeeRequest } from '../../../models/employee/add-employee.model';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -20,17 +15,17 @@ import { NotificationService } from '../../../core/services/notification.service
   styleUrl: './add-employee.css',
 })
 
-export class AddEmployee {
+export class AddEmployee implements OnInit {
+
   private fb = inject(FormBuilder);
-  private cdr = inject(ChangeDetectorRef);
   private notificationService = inject(NotificationService);
 
-  employeeForm = this.fb.group({
+    employeeForm = this.fb.group({
     employeeName: ['', Validators.required],
 
-    phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+    phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
 
-    alternatePhone: [''],
+    alternatePhone: ['', Validators.pattern('^[6-9][0-9]{9}$')],
 
     email: ['', [Validators.required, Validators.email]],
 
@@ -42,9 +37,10 @@ export class AddEmployee {
 
     pinCode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]],
 
-    designationID: [0, Validators.required],
+    designationID: [0, [Validators.required, Validators.min(1)]],
 
-    roleID: [0, Validators.required],
+    roleID: [0, [Validators.required, Validators.min(1)]],
+
   });
 
   private employeeService = inject(EmployeeService);
@@ -56,6 +52,7 @@ export class AddEmployee {
   roles: RoleModel[] = [];
 
   ngOnInit(): void {
+
     this.getDesignations();
 
     this.getRoles();
@@ -64,17 +61,13 @@ export class AddEmployee {
   getDesignations(): void {
     this.employeeService.getDesignations().subscribe({
       next: (response) => {
-        console.log('Designations');
-
-        console.log(response);
-
+       
         this.designations = response.data.filter((x) => x.isActive);
 
-        this.cdr.detectChanges();
-      },
+        },
 
       error: (error) => {
-        console.error(error);
+
         this.notificationService.error(
     error?.error?.message || 'Unable to load designations.'
   );
@@ -85,17 +78,13 @@ export class AddEmployee {
   getRoles(): void {
     this.employeeService.getRoles().subscribe({
       next: (response) => {
-        console.log('Roles');
-
-        console.log(response);
-
+        
         this.roles = response.data.filter((x) => x.isActive);
 
-        this.cdr.detectChanges();
-      },
+        },
 
       error: (error) => {
-        console.error(error);
+
         this.notificationService.error(
     error?.error?.message || 'Unable to load roles.'
   );
@@ -115,8 +104,10 @@ export class AddEmployee {
     }
 
     const employee: AddEmployeeRequest = {
+      
       employeeName: this.employeeForm.value.employeeName!,
       phone: this.employeeForm.value.phone!,
+      alternatePhone: this.employeeForm.value.alternatePhone || undefined,
       email: this.employeeForm.value.email!,
       address: this.employeeForm.value.address!,
       city: this.employeeForm.value.city!,
@@ -130,9 +121,7 @@ export class AddEmployee {
     this.employeeService.addEmployee(employee).subscribe({
       next: (response) => {
 
-  console.log(response);
-
-  this.router.navigate(['/employees']).then(() => {
+   this.router.navigate(['/employees']).then(() => {
 
     this.notificationService.success(
       response.message || 'Employee added successfully.'
@@ -143,14 +132,26 @@ export class AddEmployee {
 },
 
       error: (error) => {
-        console.log(error);
-
+        
         this.notificationService.error(error?.error?.message || 'Unable to add employee.');
       },
     });
   }
 
-  //console.log(this.employeeForm.value);
+  resetForm(): void {
+  this.employeeForm.reset({
+    employeeName: '',
+    phone: '',
+    alternatePhone: '',
+    email: '',
+    address: '',
+    city: '',
+    state: '',
+    pinCode: '',
+    designationID: 0,
+    roleID: 0,
+  });
+}
 
-  // Call EmployeeService here
+ 
 }

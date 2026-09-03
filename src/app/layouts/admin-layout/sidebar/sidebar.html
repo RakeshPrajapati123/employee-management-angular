@@ -5,8 +5,7 @@
 
     <div class="sidebar-brand">
 
-        <a routerLink="/dashboard"
-           class="brand-link text-decoration-none">
+        <a routerLink="/dashboard" class="brand-link text-decoration-none">
 
             <span class="brand-text fw-bold">
                 EMS
@@ -22,21 +21,21 @@
 
     <div class="sidebar-user text-center py-3 border-bottom">
 
-    <i class="bi bi-person-circle fs-1 text-white"></i>
+        <i class="bi bi-person-circle fs-1 text-white"></i>
 
-    <div class="fw-semibold mt-2">
+        <div class="fw-semibold mt-2">
 
-        Administrator
+            Administrator
+
+        </div>
+
+        <small class="text-secondary">
+
+            System Administrator
+
+        </small>
 
     </div>
-
-    <small class="text-secondary">
-
-        System Administrator
-
-    </small>
-
-</div>
 
 
 
@@ -49,8 +48,7 @@
         <nav class="mt-2">
 
 
-            <ul class="nav sidebar-menu flex-column"
-                role="menu">
+            <ul class="nav sidebar-menu flex-column" role="menu">
 
 
 
@@ -59,10 +57,7 @@
                 <li class="nav-item">
 
 
-                    <a 
-                    routerLink="/dashboard"
-                    routerLinkActive="active"
-                    class="nav-link">
+                    <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
 
 
                         <i class="nav-icon bi bi-speedometer2"></i>
@@ -85,66 +80,55 @@
 
                 <li class="nav-item">
 
-    <a
-        class="nav-link"
-        style="cursor:pointer"
-        (click)="toggleEmployeeMenu()">
+                    <a class="nav-link" style="cursor:pointer" (click)="toggleEmployeeMenu()">
 
-        <i class="nav-icon bi bi-people-fill"></i>
+                        <i class="nav-icon bi bi-people-fill"></i>
 
-        <p class="d-flex align-items-center w-100 mb-0">
+                        <p class="d-flex align-items-center w-100 mb-0">
 
-    <span>Employees</span>
+                            <span>Employees</span>
 
-    <i
-        class="bi ms-auto"
-        [class.bi-chevron-right]="!employeeMenuOpen()"
-        [class.bi-chevron-down]="employeeMenuOpen()">
-    </i>
+                            <i class="bi ms-auto" [class.bi-chevron-right]="!employeeMenuOpen()"
+                                [class.bi-chevron-down]="employeeMenuOpen()">
+                            </i>
 
-</p>
+                        </p>
 
-    </a>
+                    </a>
 
-    @if(employeeMenuOpen()){
+                    @if(employeeMenuOpen()){
 
-        <ul class="nav flex-column ms-3 mt-1">
+                    <ul class="nav flex-column ms-3 mt-1">
 
-            <li class="nav-item">
+                        <li class="nav-item">
 
-                <a
-                    routerLink="/employees"
-                    routerLinkActive="active"
-                    class="nav-link">
+                            <a routerLink="/employees" routerLinkActive="active" class="nav-link">
 
-                    <i class="bi bi-list-ul nav-icon"></i>
+                                <i class="bi bi-list-ul nav-icon"></i>
 
-                    <p>Employee List</p>
+                                <p>Employee List</p>
 
-                </a>
+                            </a>
 
-            </li>
+                        </li>
 
-            <li class="nav-item">
+                        <li class="nav-item">
 
-                <a
-                    routerLink="/employees/add"
-                    routerLinkActive="active"
-                    class="nav-link">
+                            <a routerLink="/employees/add" routerLinkActive="active" class="nav-link">
 
-                    <i class="bi bi-person-plus-fill nav-icon"></i>
+                                <i class="bi bi-person-plus-fill nav-icon"></i>
 
-                    <p>Add Employee</p>
+                                <p>Add Employee</p>
 
-                </a>
+                            </a>
 
-            </li>
+                        </li>
 
-        </ul>
+                    </ul>
 
-    }
+                    }
 
-</li>
+                </li>
 
 
 
@@ -153,220 +137,195 @@
 
                 <li class="nav-item">
 
-    <a
-        class="nav-link"
-        style="cursor:pointer"
-        (click)="toggleMasterMenu()">
+                    <a class="nav-link" style="cursor:pointer" (click)="toggleMasterMenu()">
 
-        <i class="nav-icon bi bi-database-fill"></i>
+                        <i class="nav-icon bi bi-database-fill"></i>
 
-        <p class="d-flex align-items-center w-100 mb-0">
+                        <p class="d-flex align-items-center w-100 mb-0">
 
-    <span>Master Data</span>
+                            <span>Master Data</span>
 
-    <i
-        class="bi ms-auto"
-        [class.bi-chevron-right]="!masterMenuOpen()"
-        [class.bi-chevron-down]="masterMenuOpen()">
-    </i>
+                            <i class="bi ms-auto" [class.bi-chevron-right]="!masterMenuOpen()"
+                                [class.bi-chevron-down]="masterMenuOpen()">
+                            </i>
 
-</p>
+                        </p>
 
-    </a>
+                    </a>
 
-           @if(masterMenuOpen()){
+                    @if(masterMenuOpen()){
 
-<ul class="nav flex-column ms-3 mt-1">
+                    <ul class="nav flex-column ms-3 mt-1">
 
-    <li class="nav-item">
+                        <li class="nav-item">
 
-        <a
-            routerLink="/departments"
-            routerLinkActive="active"
-            class="nav-link">
+                            <a routerLink="/departments" routerLinkActive="active" class="nav-link">
 
-            <i class="bi bi-building nav-icon"></i>
+                                <i class="bi bi-building nav-icon"></i>
 
-            <p>Departments</p>
+                                <p>Departments</p>
 
-        </a>
+                            </a>
 
-    </li>
+                        </li>
 
-    <li class="nav-item">
+                        <li class="nav-item">
 
-        <a routerLink="/designations" routerLinkActive="active" class="nav-link">
+                            <a routerLink="/designations" routerLinkActive="active" class="nav-link">
 
-            <i class="bi bi-person-badge-fill nav-icon"></i>
+                                <i class="bi bi-person-badge-fill nav-icon"></i>
 
-            <p>Designations</p>
+                                <p>Designations</p>
 
-        </a>
+                            </a>
 
-    </li>
+                        </li>
 
-    <li class="nav-item">
+                        <li class="nav-item">
 
-        <a routerLink="/roles" routerLinkActive="active" class="nav-link">
+                            <a routerLink="/roles" routerLinkActive="active" class="nav-link">
 
-            <i class="bi bi-person-badge-fill nav-icon"></i>
+                                <i class="bi bi-person-badge-fill nav-icon"></i>
 
-            <p>Roles</p>
+                                <p>Roles</p>
 
-        </a>
+                            </a>
 
-    </li>
+                        </li>
 
-    
 
-</ul>
 
-}
+                    </ul>
 
-   
-</li>
+                    }
 
-<!-- Reports -->
 
-<li class="nav-item">
+                </li>
 
-    <a
-        class="nav-link"
-        style="cursor:pointer"
-        (click)="toggleReportsMenu()">
+                <!-- Reports -->
 
-        <i class="nav-icon bi bi-file-earmark-bar-graph-fill"></i>
+                <li class="nav-item">
 
-        <p class="d-flex align-items-center w-100 mb-0">
+                    <a class="nav-link" style="cursor:pointer" (click)="toggleReportsMenu()">
 
-            <span>Reports</span>
+                        <i class="nav-icon bi bi-file-earmark-bar-graph-fill"></i>
 
-            <i
-                class="bi ms-auto"
-                [class.bi-chevron-right]="!reportsMenuOpen()"
-                [class.bi-chevron-down]="reportsMenuOpen()">
-            </i>
+                        <p class="d-flex align-items-center w-100 mb-0">
 
-        </p>
+                            <span>Reports</span>
 
-    </a>
+                            <i class="bi ms-auto" [class.bi-chevron-right]="!reportsMenuOpen()"
+                                [class.bi-chevron-down]="reportsMenuOpen()">
+                            </i>
 
-    @if(reportsMenuOpen()){
+                        </p>
 
-    <ul class="nav flex-column ms-3 mt-1">
+                    </a>
 
-        <li class="nav-item">
+                    @if(reportsMenuOpen()){
 
-            <a
-                routerLink="/reports/employees"
-                routerLinkActive="active"
-                class="nav-link">
+                    <ul class="nav flex-column ms-3 mt-1">
 
-                <i class="bi bi-file-earmark-text nav-icon"></i>
+                        <li class="nav-item">
 
-                <p>Employee Report</p>
+                            <a routerLink="/reports/employees" routerLinkActive="active" class="nav-link">
 
-            </a>
+                                <i class="bi bi-file-earmark-text me-2"></i>
 
-        </li>
+                                <p>Employee Report</p>
 
-        <li class="nav-item">
+                            </a>
 
-            <a
-                routerLink="/reports/departments"
-                routerLinkActive="active"
-                class="nav-link">
+                        </li>
 
-                <i class="bi bi-file-earmark-text nav-icon"></i>
+                        <li class="nav-item">
 
-                <p>Department Report</p>
+                            <a routerLink="/reports/departments" routerLinkActive="active" class="nav-link">
 
-            </a>
+                                <i class="bi bi-file-earmark-text me-2"></i>
 
-        </li>
+                                <p>Department Report</p>
 
-    </ul>
+                            </a>
 
-    }
+                        </li>
 
-</li>
+                    </ul>
 
-<!-- Administration -->
+                    }
 
-<li class="nav-header">
+                </li>
 
-    SYSTEM
+                <!-- Administration -->
 
-</li>
+                <li class="nav-header">
 
-<li class="nav-item">
+                    SYSTEM
 
-    <a
-        class="nav-link"
-        style="cursor:pointer"
-        (click)="toggleAdministrationMenu()">
+                </li>
 
-        <i class="nav-icon bi bi-gear-fill"></i>
+                <li class="nav-item">
 
-        <p class="d-flex align-items-center w-100 mb-0">
+                    <a class="nav-link" style="cursor:pointer" (click)="toggleAdministrationMenu()">
 
-            <span>Administration</span>
+                        <i class="nav-icon bi bi-gear-fill"></i>
 
-            <i
-                class="bi ms-auto"
-                [class.bi-chevron-right]="!administrationMenuOpen()"
-                [class.bi-chevron-down]="administrationMenuOpen()">
-            </i>
+                        <p class="d-flex align-items-center w-100 mb-0">
 
-        </p>
+                            <span>Administration</span>
 
-    </a>
+                            <i class="bi ms-auto" [class.bi-chevron-right]="!administrationMenuOpen()"
+                                [class.bi-chevron-down]="administrationMenuOpen()">
+                            </i>
 
-    @if(administrationMenuOpen()){
+                        </p>
 
-    <ul class="nav flex-column ms-3 mt-1">
+                    </a>
 
-        <li class="nav-item">
+                    @if(administrationMenuOpen()){
 
-            <a class="nav-link">
+                    <ul class="nav flex-column ms-3 mt-1">
 
-                <i class="bi bi-person-gear nav-icon"></i>
+                        <li class="nav-item">
 
-                <p>Users</p>
+                            <a class="nav-link" routerLink="/administrator/users" routerLinkActive="active">
 
-            </a>
+                                <i class="bi bi-people me-2"></i>
+                                Users
 
-        </li>
+                            </a>
 
-        <li class="nav-item">
+                        </li>
 
-            <a class="nav-link">
+                        <!-- <li class="nav-item">
 
-                <i class="bi bi-shield-lock-fill nav-icon"></i>
+                            <a class="nav-link">
 
-                <p>Roles</p>
+                                <i class="bi bi-shield-lock-fill nav-icon"></i>
 
-            </a>
+                                <p>Roles</p>
 
-        </li>
+                            </a>
 
-        <li class="nav-item">
+                        </li>
 
-            <a class="nav-link">
+                        <li class="nav-item">
 
-                <i class="bi bi-key-fill nav-icon"></i>
+                            <a class="nav-link">
 
-                <p>Permissions</p>
+                                <i class="bi bi-key-fill nav-icon"></i>
 
-            </a>
+                                <p>Permissions</p>
 
-        </li>
+                            </a>
 
-    </ul>
+                        </li> -->
 
-    }
+                    </ul>
 
-</li>
+                    }
+
+                </li>
 
 
 

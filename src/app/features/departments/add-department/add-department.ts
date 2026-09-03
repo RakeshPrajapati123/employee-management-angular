@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DepartmentService } from '../../../core/services/department/department.service';
 import { DepartmentModel } from '../../../models/department/department.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-add-department',
@@ -15,12 +15,11 @@ import { NotificationService } from '../../../core/services/notification.service
 
 export class AddDepartment {
 
- private departmentService = inject(DepartmentService);
+  private departmentService = inject(DepartmentService);
   private router = inject(Router);
   private notificationService = inject(NotificationService);
-  private cdr = inject(ChangeDetectorRef);
-
-  department: DepartmentModel = {
+  
+    department: DepartmentModel = {
     departmentID: 0,
     departmentName: '',
     isActive: true,
@@ -43,12 +42,7 @@ export class AddDepartment {
 
         next: (response) => {
 
-          console.log(
-            'Department added successfully:',
-            response
-          );
-
-          this.router.navigate(['/departments']).then(() => {
+         this.router.navigate(['/departments']).then(() => {
 
             this.notificationService.success(
               response.message ||
@@ -61,12 +55,7 @@ export class AddDepartment {
 
         error: (error) => {
 
-          console.error(
-            'Error adding department:',
-            error
-          );
-
-          this.notificationService.error(
+            this.notificationService.error(
             error?.error?.message ||
             'Unable to add department.'
           );

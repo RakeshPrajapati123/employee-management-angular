@@ -1,10 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { EmployeeService } from '../../../core/services/employee.service';
-import { EmployeeModel } from '../../../models/employee.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { EmployeeService } from '../../../core/services/employee/employee.service';
+import { EmployeeGetDetailsModel } from '../../../models/employee/employee-get-details.model';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-employee-details',
@@ -13,14 +13,14 @@ import { NotificationService } from '../../../core/services/notification.service
   templateUrl: './employee-details.html',
   styleUrl: './employee-details.css',
 })
+
 export class EmployeeDetails implements OnInit {
 
   private employeeService = inject(EmployeeService);
   private route = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef);
   private notificationService = inject(NotificationService);
 
-  employee: EmployeeModel | null = null;
+  employee: EmployeeGetDetailsModel | null = null;
 
   ngOnInit(): void {
 
@@ -40,13 +40,10 @@ export class EmployeeDetails implements OnInit {
 
           this.employee = response.data;
 
-          this.cdr.markForCheck();
-        },
+          },
 
         error: (error) => {
-
-  console.error('Error loading employee:', error);
-
+  
   this.notificationService.error(
     error?.error?.message || 'Unable to load employee details.'
   );

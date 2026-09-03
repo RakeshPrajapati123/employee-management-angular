@@ -20,9 +20,7 @@
 
   <div class="form-card">
 
-    <form
-      #designationForm="ngForm"
-      (ngSubmit)="addDesignation()">
+    <form #designationForm="ngForm" (ngSubmit)="addDesignation()">
 
       <div class="row">
 
@@ -130,7 +128,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          [disabled]="designationForm.invalid">
+          >
 
           <i class="bi bi-save"></i>
           Save Designation

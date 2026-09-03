@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { RoleService } from '../../../core/services/role/role.service';
 import { RoleModel } from '../../../models/role/role.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
   selector: 'app-role-list',
@@ -44,8 +44,6 @@ export class RoleList implements OnInit {
 
       next: (response) => {
 
-        console.log('Role API Response:', response);
-
         this.roles.set(response.data);
 
         this.filteredRoles.set(response.data);
@@ -54,9 +52,7 @@ export class RoleList implements OnInit {
 
       error: (error) => {
 
-        console.error('Role Load Error:', error);
-
-        this.notificationService.error(
+          this.notificationService.error(
           error?.error?.message ||
           'Unable to load roles.'
         );
@@ -165,11 +161,6 @@ export class RoleList implements OnInit {
 
         next: (response) => {
 
-          console.log(
-            'Delete Role Response:',
-            response
-          );
-
           this.closeDeleteModal();
 
           this.loadRoles();
@@ -182,11 +173,6 @@ export class RoleList implements OnInit {
         },
 
         error: (error) => {
-
-          console.error(
-            'Delete Role Error:',
-            error
-          );
 
           this.closeDeleteModal();
 

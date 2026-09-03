@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RoleService } from '../../../core/services/role/role.service';
 import { RoleModel } from '../../../models/role/role.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
 selector: 'app-role-details',
@@ -16,7 +16,6 @@ styleUrl: './role-details.css'
 export class RoleDetails implements OnInit {
 
 private route = inject(ActivatedRoute);
-private cdr = inject(ChangeDetectorRef);
 private roleService = inject(RoleService);
 
 private notificationService = inject(NotificationService);
@@ -51,24 +50,13 @@ this.roleService
 
     next: (response) => {
 
-      console.log(
-        'Role Details API Response:',
-        response
-      );
-
       this.role = response.data;
-      this.cdr.detectChanges();
-
+      
     },
 
     error: (error) => {
 
-      console.error(
-        'Role Details Load Error:',
-        error
-      );
-
-      this.notificationService.error(
+        this.notificationService.error(
         error?.error?.message ||
         'Unable to load role details.'
       );

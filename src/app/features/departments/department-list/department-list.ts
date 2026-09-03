@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { DepartmentService } from '../../../core/services/department/department.service';
 import { DepartmentModel } from '../../../models/department/department.model';
-import { NotificationService } from '../../../core/services/notification.service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 @Component({
 selector: 'app-department-list',
@@ -44,8 +44,6 @@ this.departmentService.getDepartments().subscribe({
 
   next: (response) => {
 
-    console.log('Department API Response:', response);
-
     this.departments.set(response.data);
 
     this.filteredDepartments.set(response.data);
@@ -53,8 +51,6 @@ this.departmentService.getDepartments().subscribe({
   },
 
   error: (error) => {
-
-    console.error('Department Load Error:', error);
 
     this.notificationService.error(
       error?.error?.message || 'Unable to load departments.'
@@ -144,11 +140,6 @@ confirmDelete(): void {
 
       next: (response) => {
 
-        console.log(
-          'Delete Department Response:',
-          response
-        );
-
         this.closeDeleteModal();
 
         this.loadDepartments();
@@ -161,11 +152,6 @@ confirmDelete(): void {
       },
 
       error: (error) => {
-
-        console.error(
-          'Delete Department Error:',
-          error
-        );
 
         this.closeDeleteModal();
 

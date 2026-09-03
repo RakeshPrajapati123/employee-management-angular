@@ -24,8 +24,7 @@
 
     <div class="card-body">
 
-        <div class="row mb-3">
-
+        
            <div class="row mb-3">
 
                 <div class="col-md-4">
@@ -71,10 +70,7 @@
   </div>
 
             </div>
-
             
-
-        </div>
 
         <div class="table-responsive">
 
@@ -108,49 +104,89 @@
 
                 <tbody>
 
-                    @for (employee of filteredEmployees(); track employee.employeeID) {
+    @for (employee of filteredEmployees(); track employee.employeeID) {
 
-                    <tr>
-                        <td>{{ employee.employeeName }}</td>
-                        <td>{{ employee.phone }}</td>
-                        <td>{{ employee.designationName }}</td>
-                        <td>{{ employee.departmentName }}</td>
-                        <td>{{ employee.roleName }}</td>
-                        <td>{{ employee.isActive }}</td>
-                        <td class="text-center">
+        <tr>
+            <td>{{ employee.employeeName }}</td>
+            <td>{{ employee.phone }}</td>
+            <td>{{ employee.designationName }}</td>
+            <td>{{ employee.departmentName }}</td>
+            <td>{{ employee.roleName }}</td>
+            <td>
 
- <button
-    type="button"
-    class="btn btn-sm btn-outline-info me-2"
-    title="View"
-    [routerLink]="['/employees/details', employee.employeeID]">
+@if (employee.isActive) {
 
-    <i class="bi bi-eye-fill"></i>
+<span class="badge bg-success">Active</span>
 
-</button>
+} @else {
 
-  <button type="button"
-    class="btn btn-sm btn-outline-warning me-2"
-    title="Edit"
-[routerLink]="['/employees/edit', employee.employeeID]">
-    <i class="bi bi-pencil-square"></i>
-  </button>
+<span class="badge bg-danger">Inactive</span>
 
-  <button
-    class="btn btn-sm btn-outline-danger"
-    title="Delete"
-    (click)="deleteEmployee(employee)">
-
-    <i class="bi bi-trash-fill"></i>
-
-</button>
+}
 
 </td>
-                    </tr>
 
-                    }
+            <td class="text-center">
 
-                </tbody>
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-info me-2"
+                    title="View"
+                    [routerLink]="['/employees/details', employee.employeeID]">
+
+                    <i class="bi bi-eye-fill"></i>
+
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-sm btn-outline-warning me-2"
+                    title="Edit"
+                    [routerLink]="['/employees/edit', employee.employeeID]">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                </button>
+
+                <button
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteEmployee(employee)">
+
+                    <i class="bi bi-trash-fill"></i>
+
+                </button>
+
+            </td>
+        </tr>
+
+    }
+
+    @if (filteredEmployees().length === 0) {
+
+        <tr>
+
+            <td colspan="7" class="text-center py-4">
+
+                <i class="bi bi-info-circle me-2"></i>
+
+                @if (searchText || statusFilter !== 'All') {
+
+                    No employees found matching your search criteria.
+
+                } @else {
+
+                    No employees found.
+
+                }
+
+            </td>
+
+        </tr>
+
+    }
+
+</tbody>
             </table>
 
         </div>

@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { Navbar } from './navbar/navbar';
 import { Sidebar } from './sidebar/sidebar';
 import { Footer } from './footer/footer';
-import { LayoutService } from '../../core/services/layout.service';
+import { LayoutService } from '../../shared/services/layout.service';
 
 @Component({
   selector: 'app-admin-layout',
